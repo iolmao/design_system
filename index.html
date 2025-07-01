@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System on Figma - Best Practices</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Modern color palette - soft pastels */
+            --primary-50: #f0f9ff;
+            --primary-100: #e0f2fe;
+            --primary-200: #bae6fd;
+            --primary-500: #0ea5e9;
+            --primary-600: #0284c7;
+            --primary-700: #0369a1;
+
+            --purple-50: #faf5ff;
+            --purple-100: #f3e8ff;
+            --purple-500: #a855f7;
+            --purple-600: #9333ea;
+
+            --emerald-50: #ecfdf5;
+            --emerald-100: #d1fae5;
+            --emerald-500: #10b981;
+            --emerald-600: #059669;
+
+            --orange-50: #fff7ed;
+            --orange-100: #ffedd5;
+            --orange-500: #f59e0b;
+            --orange-600: #d97706;
+
+            --rose-50: #fff1f2;
+            --rose-100: #ffe4e6;
+            --rose-500: #f43f5e;
+
+            /* Grays - very soft */
+            --gray-50: #fafaf9;
+            --gray-100: #f5f5f4;
+            --gray-200: #e7e5e4;
+            --gray-300: #d6d3d1;
+            --gray-400: #a8a29e;
+            --gray-500: #78716c;
+            --gray-600: #57534e;
+            --gray-700: #44403c;
+            --gray-800: #292524;
+            --gray-900: #1c1917;
+
+            /* Semantic Colors */
+            --surface: #ffffff;
+            --surface-secondary: var(--gray-50);
+            --surface-tertiary: var(--gray-100);
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-tertiary: var(--gray-500);
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+
+            /* Border Radius */
+            --radius-sm: 0.375rem;
+            --radius: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--surface);
+            overflow-x: hidden;
+        }
+
+        /* Modern Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--gray-200);
+            z-index: 50;
+            height: 64px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .header h1 .highlight {
+            color: var(--primary-600);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+            padding-top: 96px; /* Account for fixed header */
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: var(--space-20) 0;
+            background: linear-gradient(135deg, var(--primary-50) 0%, var(--purple-50) 100%);
+            margin: 0 calc(-1 * var(--space-6));
+            margin-bottom: var(--space-16);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: var(--space-6);
+            line-height: 1.1;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary-600), var(--purple-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+                 /* Table of Contents */
+         .toc {
+             background: var(--surface);
+             border: 1px solid var(--gray-200);
+             border-radius: var(--radius-xl);
+             padding: var(--space-8);
+             margin-bottom: var(--space-16);
+             box-shadow: var(--shadow-sm);
+         }
+
+         /* Sticky TOC Bar - appears when original TOC is out of view */
+         .toc-sticky {
+             position: fixed;
+             top: 64px;
+             left: 0;
+             right: 0;
+             background: rgba(255, 255, 255, 0.95);
+             backdrop-filter: blur(20px);
+             border-bottom: 1px solid var(--gray-200);
+             z-index: 40;
+             padding: var(--space-3) 0;
+             transform: translateY(-100%);
+             transition: transform 0.3s ease;
+         }
+
+         .toc-sticky.visible {
+             transform: translateY(0);
+         }
+
+         .toc-sticky-content {
+             max-width: 1200px;
+             margin: 0 auto;
+             padding: 0 var(--space-6);
+             display: flex;
+             align-items: center;
+             gap: var(--space-6);
+         }
+
+         .toc-sticky-title {
+             font-size: 0.875rem;
+             font-weight: 600;
+             color: var(--text-secondary);
+             flex-shrink: 0;
+         }
+
+         .toc-sticky-nav {
+             display: flex;
+             gap: var(--space-4);
+             overflow-x: auto;
+             flex: 1;
+             padding: var(--space-2) 0;
+         }
+
+         .toc-sticky-nav::-webkit-scrollbar {
+             display: none;
+         }
+
+         .toc-sticky-nav {
+             -ms-overflow-style: none;
+             scrollbar-width: none;
+         }
+
+         .toc-sticky-link {
+             color: var(--text-secondary);
+             text-decoration: none;
+             font-size: 0.875rem;
+             font-weight: 500;
+             padding: var(--space-2) var(--space-3);
+             border-radius: var(--radius);
+             white-space: nowrap;
+             transition: all 0.2s ease;
+             border: 1px solid transparent;
+         }
+
+         .toc-sticky-link:hover {
+             color: var(--primary-600);
+             background: var(--primary-50);
+             border-color: var(--primary-200);
+         }
+
+         .toc-sticky-link.active {
+             color: var(--primary-600);
+             background: var(--primary-100);
+             border-color: var(--primary-300);
+         }
+
+        /* Sticky Section Header */
+        .section-sticky {
+            position: fixed;
+            top: 144px; /* Below header (64px) + toc-sticky (~80px) */
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(16px) saturate(180%);
+            border-bottom: 1px solid var(--gray-200);
+            box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05);
+            z-index: 90;
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .section-sticky.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .section-sticky-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-sticky-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            background: linear-gradient(135deg, var(--primary-600), var(--purple-600));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .toc h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-6);
+        }
+
+        .toc ol {
+            list-style: none;
+            counter-reset: toc-counter;
+        }
+
+        .toc li {
+            counter-increment: toc-counter;
+            margin-bottom: var(--space-3);
+            transition: transform 0.2s ease;
+        }
+
+        .toc li:hover {
+            transform: translateX(4px);
+        }
+
+        .toc li::before {
+            content: counter(toc-counter);
+            background: var(--primary-100);
+            color: var(--primary-700);
+            font-weight: 600;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--space-3);
+            font-size: 0.875rem;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .toc a:hover {
+            color: var(--primary-600);
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: var(--space-20);
+            scroll-margin-top: 194px; /* Adjusted for header + toc + section sticky (144px + 50px) */
+        }
+
+        h2 {
+            font-size: clamp(1.875rem, 4vw, 2.25rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-8);
+            padding-bottom: var(--space-4);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: var(--space-12) 0 var(--space-6) 0;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin: var(--space-8) 0 var(--space-4) 0;
+        }
+
+        h5 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin: var(--space-6) 0 var(--space-3) 0;
+        }
+
+        p {
+            margin-bottom: var(--space-6);
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin: var(--space-6) 0 var(--space-6) var(--space-6);
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: var(--space-2);
+            line-height: 1.6;
+        }
+
+        /* Cards and Grids */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-6);
+            margin: var(--space-8) 0;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--gray-300);
+        }
+
+        .card h4 {
+            color: var(--text-primary);
+            margin-top: 0;
+            margin-bottom: var(--space-4);
+        }
+
+        /* Step Components */
+        .step-guide {
+            background: linear-gradient(135deg, var(--primary-50), var(--purple-50));
+            border: 1px solid var(--primary-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .step-guide h4 {
+            color: var(--primary-700);
+            margin: 0 0 var(--space-3) 0;
+        }
+
+        .step-guide p {
+            color: var(--primary-600);
+            margin: 0;
+        }
+
+        .step-list {
+            margin: var(--space-8) 0;
+        }
+
+        .step {
+            display: flex;
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+            padding: var(--space-5);
+            background: var(--surface);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            transition: all 0.2s ease;
+        }
+
+        .step:hover {
+            border-color: var(--primary-300);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .step-number {
+            background: var(--primary-600);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h5 {
+            margin: 0 0 var(--space-2) 0;
+            color: var(--text-primary);
+        }
+
+        .step-content p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        /* Tips and Boxes */
+        .figma-tip {
+            background: var(--emerald-50);
+            border: 1px solid var(--emerald-200);
+            border-left: 4px solid var(--emerald-500);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-8) 0;
+        }
+
+        .figma-tip h5 {
+            color: var(--emerald-700);
+            margin: 0 0 var(--space-3) 0;
+        }
+
+        .figma-tip p {
+            color: var(--emerald-600);
+            margin: 0;
+        }
+
+        .highlight-box {
+            background: var(--emerald-50);
+            border: 1px solid var(--emerald-200);
+            border-left: 4px solid var(--emerald-500);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-8) 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--emerald-700);
+            margin: 0 0 var(--space-4) 0;
+        }
+
+        .warning-box {
+            background: var(--orange-50);
+            border: 1px solid var(--orange-200);
+            border-left: 4px solid var(--orange-500);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin: var(--space-8) 0;
+        }
+
+        .warning-box h4 {
+            color: var(--orange-700);
+            margin: 0 0 var(--space-4) 0;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--gray-900);
+            color: #e2e8f0;
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+            margin: var(--space-6) 0;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            white-space: pre;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-700);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-50);
+            padding: var(--space-12) 0;
+            margin-top: var(--space-20);
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-500), var(--purple-500));
+            z-index: 100;
+            transition: width 0.2s ease;
+        }
+
+                 /* Mobile Optimizations */
+         @media (max-width: 768px) {
+             .container {
+                 padding: 0 var(--space-4);
+                 padding-top: 80px;
+             }
+             
+             .hero {
+                 margin: 0 calc(-1 * var(--space-4));
+                 padding: var(--space-12) var(--space-4);
+             }
+             
+             .grid {
+                 grid-template-columns: 1fr;
+                 gap: var(--space-4);
+             }
+             
+             .step {
+                 flex-direction: column;
+                 text-align: center;
+             }
+             
+             .code-block {
+                 font-size: 0.75rem;
+                 padding: var(--space-4);
+             }
+
+             .toc-sticky-content {
+                 padding: 0 var(--space-4);
+                 gap: var(--space-3);
+             }
+
+             .toc-sticky-title {
+                 display: none;
+             }
+
+             .toc-sticky-nav {
+                 gap: var(--space-2);
+             }
+
+             .toc-sticky-link {
+                 font-size: 0.75rem;
+                 padding: var(--space-1) var(--space-2);
+             }
+
+             .section-sticky {
+                 top: 124px; /* Adjusted for mobile header height */
+             }
+
+             .section-sticky-content {
+                 padding: 0 var(--space-4);
+             }
+
+             .section-sticky-title {
+                 font-size: 0.875rem;
+             }
+
+             .section {
+                 scroll-margin-top: 174px; /* Adjusted for mobile (124px + 50px) */
+             }
+         }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Design System <span class="highlight">Best Practices</span> on Figma </h1>
+        </div>
+    </header>
+
+    <!-- Sticky TOC Bar -->
+    <div class="toc-sticky" id="stickyToc">
+        <div class="toc-sticky-content">
+            <span class="toc-sticky-title">Contents:</span>
+            <nav class="toc-sticky-nav">
+                <a href="#organization-setup" class="toc-sticky-link">1. Organization Setup</a>
+                <a href="#variables-structure" class="toc-sticky-link">2. Variables Structure</a>
+                <a href="#library-organization" class="toc-sticky-link">3. Library Organization</a>
+                <a href="#publishing-workflow" class="toc-sticky-link">4. Publishing Workflow</a>
+                <a href="#team-adoption" class="toc-sticky-link">5. Team Adoption</a>
+                <a href="#best-practices" class="toc-sticky-link">6. Best Practices</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Sticky Section Header -->
+    <div class="section-sticky" id="stickySection">
+        <div class="section-sticky-content">
+            <span class="section-sticky-title" id="stickySectionTitle">1. Organization Setup</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Build Better <span class="highlight">Design Systems</span></h1>
+            <p>Step-by-step tutorials for structuring and optimizing your Figma design system</p>
+        </div>
+
+        <!-- Content -->
+            <div class="toc">
+                <h3>Mini-Guide Contents</h3>
+                <ol>
+                    <li><a href="#organization-setup">Organization Setup</a></li>
+                    <li><a href="#variables-structure">Design Variables Structure</a></li>
+                    <li><a href="#library-organization">Library Organization</a></li>
+                    <li><a href="#publishing-workflow">Publishing Workflow</a></li>
+                    <li><a href="#team-adoption">Team Adoption Strategy</a></li>
+                    <li><a href="#best-practices">Best Practices Cheat Sheet</a></li>
+                </ol>
+            </div>
+
+            <section id="organization-setup" class="section">
+                <h2>1. Organization Setup</h2>
+                
+                <div class="step-guide">
+                    <h4>🏗️ Setting up the foundation structure</h4>
+                    <p>Before creating any components, it's crucial to properly configure your organization and file structure in Figma.</p>
+                </div>
+
+                <h3>Team Structure Configuration</h3>
+                
+                <p>Start by creating a dedicated <strong>"Design System Core"</strong> team that will manage the main library. This team should have appropriate permissions configured: only maintainers can publish changes, editors can contribute to development, and viewers can access for reference.</p>
+
+                <p>Create <strong>separate product teams</strong> for different areas of your organization such as "Marketing", "Web Application", and "Mobile". Each team should have its own projects and appropriate access to the design system libraries they need.</p>
+
+                <p><strong>Permission structure</strong> is crucial for maintaining control while enabling collaboration. Establish clear roles and ensure team members understand their access levels and responsibilities within the design system ecosystem.</p>
+
+                <div class="highlight-box">
+                    <h4>Example Organization Structure:</h4>
+                    <div class="code-block">Organization
+├── Design System Team
+│   ├── Core Library (Published)
+│   ├── Token Library (Published)
+│   └── Documentation
+└── Product Teams
+    ├── Marketing
+    │   ├── Landing Pages
+    │   ├── Product Pages
+    │   └── Campaign Assets
+    ├── Web Application
+    │   ├── Dashboard
+    │   ├── User Management
+    │   └── Analytics
+    └── Mobile
+        ├── iOS App
+        ├── Android App
+        └── Responsive Web</div>
+                </div>
+
+                <div class="figma-tip">
+                    <h5>💡 Pro Tip</h5>
+                    <p>Use the naming convention "[TEAM] - [PROJECT] - [STATUS]" for files. Example: "DS Core - Token Library - Published"</p>
+                </div>
+
+                <h3>Project Structure</h3>
+                
+                <p>Within your Design System team, establish a <strong>"Core Libraries"</strong> project to house all master files and published libraries. Consider adding a separate project for documentation and templates to keep support materials organized and easily accessible.</p>
+
+                <p>In each product team, create <strong>specific projects</strong> that align with their work areas - such as "Landing Pages" for marketing, "Dashboard" for web applications, or "Mobile App" for mobile teams. This structure helps maintain clear boundaries while enabling efficient collaboration.</p>
+
+                <div class="warning-box">
+                    <h4>⚠️ Structure Planning Warning</h4>
+                    <p>Once you start publishing libraries, changing the organization structure can be complex. Plan carefully from the beginning!</p>
+                </div>
+            </section>
+
+            <section id="variables-structure" class="section">
+                <h2>2. Design Variables Structure</h2>
+                
+                <div class="step-guide">
+                    <h4>🎨 Building scalable design token architecture</h4>
+                    <p>Variables in Figma are the foundation of your design system. Let's set them up correctly for maximum scalability.</p>
+                </div>
+
+                <h3>Variables Architecture Planning</h3>
+                
+                <p><strong>Token hierarchy</strong> is fundamental to a scalable design system. Plan your structure with three levels: Primitive tokens (raw values like #3b82f6), Semantic tokens (contextual meaning like "primary-color"), and Component tokens (specific usage like "button-background").</p>
+
+                <p><strong>Naming conventions</strong> should be consistent and logical. Use systematic patterns that clearly communicate purpose and enable easy searching. Consider using "/" to group related tokens like "color/primitive/blue-500" or "spacing/component/padding".</p>
+
+                <p><strong>Collections strategy</strong> involves planning separate collections for Colors, Typography, Spacing, Effects, and Breakpoints. From the start, consider theming needs by setting up Light and Dark modes to support future design variations.</p>
+
+                <h3>Implementation in Figma</h3>
+                
+                <div class="step-list">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>Access Variables Panel</h5>
+                            <p>Open the variables panel in your library file and begin creating your variable structure.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>Create Primitive Collections First</h5>
+                            <p>Start with primitive color collections. Add your base color palette including neutral grays and brand colors.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>Set Up Modes for Theming</h5>
+                            <p>Configure your collections with Light and Dark modes to support theme switching in your design system.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h5>Build Semantic Layer</h5>
+                            <p>Create semantic color collections that reference your primitive tokens with contextual meaning for different use cases.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>✨ Token Organization Best Practice</h4>
+                    <p>Group variables logically using "/" in names: "color/primitive/blue-500", "color/semantic/primary", "spacing/component/padding".</p>
+                </div>
+
+                <h3>Example Token Structure</h3>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h4>Primitive Tokens (Raw Values)</h4>
+                        <div class="code-block">Colors:
+├── gray-50: #fafafa
+├── gray-100: #f5f5f5
+├── gray-500: #6b7280
+├── gray-900: #111827
+├── blue-500: #3b82f6
+├── red-500: #ef4444
+└── green-500: #10b981
+
+Spacing:
+├── space-1: 4px
+├── space-2: 8px
+├── space-4: 16px
+├── space-6: 24px
+├── space-8: 32px
+└── space-12: 48px
+
+Typography:
+├── font-size-sm: 14px
+├── font-size-base: 16px
+├── font-size-lg: 18px
+└── font-size-xl: 20px</div>
+                    </div>
+
+                    <div class="card">
+                        <h4>Semantic Tokens (Contextual)</h4>
+                        <div class="code-block">Colors:
+├── color-primary: {blue-500}
+├── color-success: {green-500}
+├── color-error: {red-500}
+├── color-text-primary: {gray-900}
+├── color-text-secondary: {gray-500}
+├── color-surface: {gray-50}
+└── color-border: {gray-200}
+
+Spacing:
+├── spacing-xs: {space-1}
+├── spacing-sm: {space-2}
+├── spacing-md: {space-4}
+├── spacing-lg: {space-6}
+├── spacing-xl: {space-8}
+└── spacing-component-padding: {space-4}
+
+Typography:
+├── text-body: {font-size-base}
+├── text-caption: {font-size-sm}
+├── text-heading: {font-size-lg}
+└── text-display: {font-size-xl}</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="library-organization" class="section">
+                <h2>3. Library Organization</h2>
+                
+                <div class="step-guide">
+                    <h4>📚 Structuring your design system library</h4>
+                    <p>A well-organized library is crucial for team adoption and maintainability. Let's structure it properly.</p>
+                </div>
+
+                <h3>File Structure Setup</h3>
+                
+                <p><strong>Page organization</strong> should be logical and predictable. Create dedicated pages for Variables, Components, Documentation, Work in Progress, and Archive. This structure helps team members quickly find what they need and maintains a clean working environment.</p>
+
+                <p><strong>Component categorization</strong> follows a hierarchical approach: start with Foundations (colors, typography, spacing), then Primitives (buttons, inputs), followed by Composite elements (cards, navigation), Layout components (grids, containers), and finally Templates for common patterns.</p>
+
+                <p><strong>Documentation standards</strong> are essential for adoption. Each component should include usage examples, available variants, and any important guidelines or constraints. Good documentation reduces support requests and increases team confidence.</p>
+
+                <h3>Component Organization Strategy</h3>
+                
+                <p><strong>Naming conventions</strong> should be established early and maintained consistently. Use clear, descriptive names that communicate component hierarchy and purpose. This makes components easier to find and understand at a glance.</p>
+
+                <p><strong>Master component placement</strong> requires logical grouping with clear visual separation. Use descriptive headers and consistent spacing between component groups to enable easy navigation and discovery.</p>
+
+                <p><strong>Version control</strong> in file names helps teams track changes and understand which version they're using. Include version information in your published library names for clear communication and tracking.</p>
+
+                <div class="figma-tip">
+                    <h5>💡 Organization Tip</h5>
+                    <p>Use emoji prefixes for pages and consistent spacing between component groups for better visual hierarchy.</p>
+                </div>
+
+                <h3>Example Library File Structure</h3>
+                
+                <div class="code-block">📁 Design System Library
+├── 🎨 Variables
+│   ├── Color Collections
+│   ├── Typography Collections
+│   ├── Spacing Collections
+│   └── Effect Collections
+├── 🧩 Components
+│   ├── Foundations/
+│   │   ├── 🎨 Colors
+│   │   ├── 📝 Typography
+│   │   ├── 📐 Spacing
+│   │   └── 🔲 Icons
+│   ├── Primitives/
+│   │   ├── 🔘 Buttons
+│   │   ├── 📝 Form Inputs
+│   │   ├── 🏷️ Tags & Badges
+│   │   └── 🖼️ Avatars
+│   ├── Composite/
+│   │   ├── 📄 Cards
+│   │   ├── 🧭 Navigation
+│   │   ├── 📊 Data Display
+│   │   └── 🎭 Modals
+│   └── Layout/
+│       ├── 📏 Grid System
+│       ├── 📦 Containers
+│       └── 🗂️ Stack Components
+├── 📖 Documentation
+│   ├── Usage Guidelines
+│   ├── Component Examples
+│   └── Do's and Don'ts
+├── 🚧 Work in Progress
+└── 🗄️ Archive</div>
+
+                <h3>Component Naming Examples</h3>
+                
+                <div class="code-block">Button Component Structure:
+├── Type: Primary, Secondary, Ghost, Link
+├── Size: Small, Medium, Large
+├── State: Default, Hover, Active, Disabled
+└── Icon: None, Left, Right, Icon Only
+
+Form Input Structure:
+├── Type: Text, Email, Password, Search
+├── State: Default, Focused, Error, Disabled
+├── Size: Small, Medium, Large
+└── Variant: With Label, With Helper Text, With Icon</div>
+            </section>
+
+            <section id="publishing-workflow" class="section">
+                <h2>4. Publishing Workflow</h2>
+                
+                <div class="step-guide">
+                    <h4>🚀 Essential publishing considerations</h4>
+                    <p>While each organization will develop their own workflow, there are fundamental principles that ensure stability and clear communication.</p>
+                </div>
+
+                <h3>Core Principles</h3>
+                
+                <p>A reliable publishing process should always include <strong>testing before release</strong>. Set up a staging environment or duplicate file to test changes with real project files before publishing to your main library. This prevents breaking existing designs and ensures component compatibility.</p>
+
+                <p><strong>Version control and documentation</strong> are essential for team communication. Use semantic versioning (v1.0.0 for major changes, v1.1.0 for new features, v1.0.1 for fixes) and always include clear release notes explaining what changed and any actions required from your team.</p>
+
+                <p><strong>Communication channels</strong> should be established early. Whether it's Slack, Teams, or email, ensure your team knows where to find updates and how to request new components or report issues.</p>
+
+                <div class="highlight-box">
+                    <h4>✨ Version Control Strategy</h4>
+                    <p>Use semantic versioning consistently and document every release with clear, actionable release notes that help teams understand the impact of changes.</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Critical Publishing Rule</h4>
+                    <p>Never publish untested changes directly to production. Always test components in real project contexts before releasing to avoid breaking existing designs.</p>
+                </div>
+            </section>
+
+            <section id="team-adoption" class="section">
+                <h2>5. Team Adoption Strategy</h2>
+                
+                <div class="step-guide">
+                    <h4>👥 Essential steps for successful adoption</h4>
+                    <p>The most important factors for design system adoption are accessibility, documentation, and support.</p>
+                </div>
+
+                <h3>Getting Started</h3>
+                
+                <p><strong>Enable the library</strong> in your team's project files and ensure everyone has access to the necessary variable collections. Create starter templates with the library pre-enabled to make it easy for team members to begin new projects with the design system already configured.</p>
+
+                <p><strong>Document usage patterns</strong> with clear examples showing how to use components correctly. Include common use cases and any important constraints or guidelines. Good documentation reduces questions and increases confident adoption.</p>
+
+                <p><strong>Establish support channels</strong> where team members can ask questions, request new components, or report issues. This could be a dedicated Slack channel, regular office hours, or a simple issue tracking system.</p>
+
+                <div class="warning-box">
+                    <h4>⚠️ Common Adoption Challenges</h4>
+                    <ul>
+                        <li>Lack of training and documentation</li>
+                        <li>Missing components for specific use cases</li>
+                        <li>Complex component structure</li>
+                        <li>Insufficient communication about updates</li>
+                    </ul>
+                </div>
+
+                <div class="figma-tip">
+                    <h5>💡 Adoption Tip</h5>
+                    <p>Start with a small pilot team to test adoption, gather feedback, and refine your approach before rolling out organization-wide.</p>
+                </div>
+            </section>
+
+            <section id="best-practices" class="section">
+                <h2>6. Best Practices Cheat Sheet</h2>
+                
+                <div class="step-guide">
+                    <h4>⚡ Quick reference for Figma design system excellence</h4>
+                    <p>Essential practices to keep your design system performant, scalable, and maintainable.</p>
+                </div>
+
+                <div class="grid">
+                    <div class="card">
+                        <h4>🧩 Component Creation</h4>
+                        <ul>
+                            <li><strong>Auto Layout Always:</strong> Use auto layout for all interactive components</li>
+                            <li><strong>Logical Variants:</strong> Create variants only when truly needed</li>
+                            <li><strong>Component Properties:</strong> Expose text, boolean, and instance swap properties</li>
+                            <li><strong>Naming Clarity:</strong> Use descriptive, consistent naming conventions</li>
+                            <li><strong>Documentation:</strong> Document usage and edge cases inline</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>🎨 Variables & Tokens</h4>
+                        <ul>
+                            <li><strong>Token Hierarchy:</strong> Primitive → Semantic → Component levels</li>
+                            <li><strong>Consistent Naming:</strong> Use systematic naming patterns and logical grouping</li>
+                            <li><strong>Mode Planning:</strong> Set up light/dark modes from the start</li>
+                            <li><strong>Alias Usage:</strong> Reference primitive tokens in semantic ones</li>
+                            <li><strong>Scale Thinking:</strong> Use mathematical scales for spacing/typography</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>📚 Library Management</h4>
+                        <ul>
+                            <li><strong>Clear Structure:</strong> Organize with logical categories and naming</li>
+                            <li><strong>Version Control:</strong> Use semantic versioning and release notes</li>
+                            <li><strong>Staging Environment:</strong> Test changes before production release</li>
+                            <li><strong>Regular Audits:</strong> Review usage and clean unused components</li>
+                            <li><strong>Breaking Changes:</strong> Communicate major changes in advance</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>⚡ Performance Optimization</h4>
+                        <ul>
+                            <li><strong>Avoid Deep Nesting:</strong> Keep component nesting under 3-4 levels</li>
+                            <li><strong>Instance Management:</strong> Use component properties over instance swaps when possible</li>
+                            <li><strong>File Size Control:</strong> Regular cleanup of unused assets and components</li>
+                            <li><strong>Quality Tools:</strong> Use linting and validation tools for quality checks</li>
+                            <li><strong>Memory Efficiency:</strong> Optimize large images and unnecessary effects</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>👥 Team Collaboration</h4>
+                        <ul>
+                            <li><strong>Clear Permissions:</strong> Set appropriate access levels for each team</li>
+                            <li><strong>Communication Channels:</strong> Establish dedicated channels for updates</li>
+                            <li><strong>Training Materials:</strong> Create and maintain up-to-date documentation</li>
+                            <li><strong>Feedback Loops:</strong> Regular check-ins with consuming teams</li>
+                            <li><strong>Support System:</strong> Quick response to questions and issues</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>🔍 Quality Assurance</h4>
+                        <ul>
+                            <li><strong>Pre-publish Checklist:</strong> Test all variants and edge cases</li>
+                            <li><strong>Accessibility Check:</strong> Verify contrast ratios and touch targets</li>
+                            <li><strong>Cross-platform Testing:</strong> Test on different screen sizes</li>
+                            <li><strong>Component Validation:</strong> Ensure all properties work correctly</li>
+                            <li><strong>Documentation Review:</strong> Keep usage guidelines current</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="display: none;">
+                    <h4>🎯 Success Metrics to Track</h4>
+                    <div class="grid">
+                        <div class="card">
+                            <h4>Adoption Metrics</h4>
+                            <ul>
+                                <li>Library usage across teams</li>
+                                <li>Component adoption rates</li>
+                                <li>Time to design completion</li>
+                                <li>Design consistency scores</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>Quality Metrics</h4>
+                            <ul>
+                                <li>Bug reports and resolution time</li>
+                                <li>User satisfaction scores</li>
+                                <li>Training completion rates</li>
+                                <li>Component reuse frequency</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>🚫 Common Pitfalls to Avoid</h4>
+                    <ul>
+                        <li><strong>Over-componentization:</strong> Not every design element needs to be a component</li>
+                        <li><strong>Inconsistent Updates:</strong> Publishing changes without proper communication</li>
+                        <li><strong>Poor Documentation:</strong> Leaving components without usage guidelines</li>
+                        <li><strong>Ignoring Feedback:</strong> Not acting on team input and requests</li>
+                        <li><strong>Breaking Changes:</strong> Making changes that break existing designs</li>
+                        <li><strong>Complex Variants:</strong> Creating too many variant combinations</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>This practical guide provides actionable steps for structuring and maintaining an effective Figma design system. Adapt these practices to fit your team's specific workflow and requirements.</p>
+        <p style="margin-top: var(--space-4); font-size: 0.875rem; color: var(--text-tertiary);">
+            Created by <strong>Iolao Cocco</strong> • Contact me: <a href="mailto:iolao.cocco@gmail.com" style="color: var(--primary-600); text-decoration: none;">iolao.cocco@gmail.com</a>
+        </p>
+    </div>
+
+    <script>
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            let progressBar = document.querySelector('.scroll-progress');
+            if (!progressBar) {
+                progressBar = document.createElement('div');
+                progressBar.className = 'scroll-progress';
+                document.body.appendChild(progressBar);
+            }
+            
+            progressBar.style.width = scrollPercent + '%';
+        });
+
+        // Sticky TOC and Section Header functionality
+        window.addEventListener('load', () => {
+            const originalToc = document.querySelector('.toc');
+            const stickyToc = document.getElementById('stickyToc');
+            const stickySection = document.getElementById('stickySection');
+            const stickySectionTitle = document.getElementById('stickySectionTitle');
+            const stickyLinks = document.querySelectorAll('.toc-sticky-link');
+            const sections = document.querySelectorAll('.section');
+
+            // Section titles mapping
+            const sectionTitles = {
+                'organization-setup': '1. Organization Setup',
+                'variables-structure': '2. Design Variables Structure',
+                'library-organization': '3. Library Organization',
+                'publishing-workflow': '4. Publishing Workflow',
+                'team-adoption': '5. Team Adoption Strategy',
+                'best-practices': '6. Best Practices Cheat Sheet'
+            };
+
+            // Observer for original TOC visibility
+            const tocObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        stickyToc.classList.add('visible');
+                    } else {
+                        stickyToc.classList.remove('visible');
+                    }
+                });
+            }, {
+                rootMargin: '-100px 0px 0px 0px'
+            });
+
+            tocObserver.observe(originalToc);
+
+            // Track current section for sticky header
+            let currentVisibleSection = '';
+            
+            // Observer for sections to track which one is currently visible
+            const sectionTracker = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        currentVisibleSection = entry.target.id;
+                        // Update sticky title when section changes
+                        if (sectionTitles[currentVisibleSection]) {
+                            stickySectionTitle.textContent = sectionTitles[currentVisibleSection];
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.5,
+                rootMargin: '-50% 0px -50% 0px'
+            });
+
+            // Observe all sections for tracking
+            sections.forEach(section => {
+                sectionTracker.observe(section);
+            });
+
+            // Observer for section headers to show/hide sticky title
+            const headerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const section = entry.target.closest('.section');
+                    const sectionId = section?.id;
+                    
+                    if (entry.isIntersecting) {
+                        // Header is visible - hide sticky
+                        if (sectionId === currentVisibleSection) {
+                            stickySection.classList.remove('visible');
+                        }
+                    } else if (entry.boundingClientRect.top < 0) {
+                        // Header has scrolled past - show sticky if this is the current section
+                        if (sectionId === currentVisibleSection) {
+                            stickySection.classList.add('visible');
+                        }
+                    }
+                });
+            }, {
+                threshold: 0,
+                rootMargin: '-194px 0px 0px 0px'
+            });
+
+            // Observe all section headers
+            sections.forEach(section => {
+                const header = section.querySelector('h2');
+                if (header) {
+                    headerObserver.observe(header);
+                }
+            });
+
+            // Observer for active section highlighting
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Remove active class from all links
+                        stickyLinks.forEach(link => link.classList.remove('active'));
+                        
+                        // Add active class to corresponding link
+                        const activeLink = document.querySelector(`.toc-sticky-link[href="#${entry.target.id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '-20% 0px -60% 0px'
+            });
+
+            // Observe all sections
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // Smooth reveal animations on scroll
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            sections.forEach(section => {
+                revealObserver.observe(section);
+            });
+        });
+    </script>
+</body>
+</html> 
