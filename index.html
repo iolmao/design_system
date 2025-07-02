@@ -147,7 +147,7 @@
             padding: var(--space-20) 0;
             background: linear-gradient(135deg, var(--primary-50) 0%, var(--purple-50) 100%);
             margin: 0 calc(-1 * var(--space-6));
-            margin-bottom: var(--space-16);
+            margin-bottom: var(--space-12);
         }
 
         .hero h1 {
@@ -177,8 +177,8 @@
              background: var(--surface);
              border: 1px solid var(--gray-200);
              border-radius: var(--radius-xl);
-             padding: var(--space-8);
-             margin-bottom: var(--space-16);
+             padding: var(--space-6);
+             margin-bottom: var(--space-12);
              box-shadow: var(--shadow-sm);
          }
 
@@ -304,7 +304,8 @@
             font-size: 1.25rem;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: var(--space-6);
+            margin-top: 0;
+            margin-bottom: var(--space-4);
         }
 
         .toc ol {
@@ -314,7 +315,7 @@
 
         .toc li {
             counter-increment: toc-counter;
-            margin-bottom: var(--space-3);
+            margin-bottom: var(--space-2);
             transition: transform 0.2s ease;
         }
 
@@ -327,14 +328,14 @@
             background: var(--primary-100);
             color: var(--primary-700);
             font-weight: 600;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-right: var(--space-3);
-            font-size: 0.875rem;
+            margin-right: var(--space-2);
+            font-size: 0.8125rem;
         }
 
         .toc a {
@@ -588,6 +589,12 @@
              .hero {
                  margin: 0 calc(-1 * var(--space-4));
                  padding: var(--space-12) var(--space-4);
+                 margin-bottom: var(--space-8);
+             }
+             
+             .toc {
+                 padding: var(--space-5);
+                 margin-bottom: var(--space-8);
              }
              
              .grid {
